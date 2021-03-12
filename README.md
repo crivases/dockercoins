@@ -9,3 +9,4 @@ hasher = web service computing hash of POSTed data
 worker = background process using rng and hasher
 webui = web interface to watch progress
 ```
+![CI](https://github.com/Macarena-SRE/dockercoins/workflows/CI/badge.svg?branch=docker)
