@@ -1,5 +1,7 @@
 # dockercoins
 
+![CI](https://github.com/Macarena-SRE/dockercoins/workflows/CI/badge.svg?branch=docker)
+
 This is the demo application originally used in Jérôme Petazzoni's [orchestration workshop](https://github.com/jpetazzo/container.training).
 
 [Kubernetes Hands-on Workshop](https://training.play-with-kubernetes.com/kubernetes-workshop/)
@@ -9,4 +11,4 @@ hasher = web service computing hash of POSTed data
 worker = background process using rng and hasher
 webui = web interface to watch progress
 ```
-![CI](https://github.com/Macarena-SRE/dockercoins/workflows/CI/badge.svg?branch=docker)
+
