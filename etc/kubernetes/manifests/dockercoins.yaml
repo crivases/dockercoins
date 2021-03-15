@@ -1,0 +1,172 @@
+#se le pone el daemonset (configuracion de un demonio solamente una vez por mq virtual a diferencia con el Deployment que puede terner muchas replicas)
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rng
+spec:
+  selector:
+    matchLabels:
+      app: rng
+  template:
+    metadata:
+      labels:
+        app: rng
+    spec:
+      containers:
+        -
+          image: ljferrero/dockercoins:latest-rng
+          imagePullPolicy: Always
+          ports:
+            -
+              containerPort: 8080
+              protocol: TCP
+---              
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hasher
+spec:
+  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasher
+  template:
+    metadata:
+      labels:
+        app: hasher
+    spec:
+      containers:
+        -
+          image: ljferrero/dockercoins:latest-hasher
+          imagePullPolicy: Always
+          ports:
+            -
+              containerPort: 8080
+              protocol: TCP
+---              
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        -
+          image: redis
+          imagePullPolicy: Always
+          ports:
+            -
+              containerPort: 6379
+              protocol: TCP
+          volumeMounts:
+            -
+              mountPath: /data
+              name: redis
+      volumes:
+        -
+          name: redis
+          emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui
+spec:
+  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+        -
+          image: ljferrero/dockercoins:latest-webui
+          imagePullPolicy: Always
+          ports:
+            -
+              containerPort: 8080
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        -
+          image: ljferrero/dockercoins:latest-worker
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Services
+metadata:
+  name: hasher
+spec:
+  ports:
+    -
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: hasher
+---
+apiVersion: v1
+kind: Services
+metadata:
+  name: redis
+spec:
+  ports:
+    -
+      port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
+---
+apiVersion: v1
+kind: Services
+metadata:
+  name: rng
+spec:
+  ports:
+    -
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: rng
+---
+apiVersion: v1
+kind: Services
+metadata:
+  name: webui
+spec:
+  ports:
+    -
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: webui
+    
+  
