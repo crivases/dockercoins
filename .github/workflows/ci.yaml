@@ -14,7 +14,7 @@ jobs:
         set -x
         for app in hasher rng webui worker
           do \
-            docker build -t terferre/dockercoins:testing-${app} ${app}
+            docker build -t ljferrero/dockercoins:testing-${app} ${app}
           done
         #creamos redes p cada uno
         for app in hasher redis rng webui worker
@@ -26,7 +26,7 @@ jobs:
         # 
         for app in hasher rng webui worker 
           do \
-            docker run -d --name ${app} --network ${app} terferre/dockercoins:testing-${app}
+            docker run -d --name ${app} --network ${app} ljferrero/dockercoins:testing-${app}
           done
         #conectar los contenedores a las redes
         for app in webui worker
@@ -74,7 +74,7 @@ jobs:
         #creo imagen image
         for app in hasher rng webui worker
           do \
-            docker build -t terferre/dockercoins:testing-${app} ${app}
+            docker build -t ljferrero/dockercoins:testing-${app} ${app}
           done
         docker swarm init
         project=dockercoins
@@ -125,7 +125,7 @@ jobs:
         #creo imagen image
         for app in hasher rng webui worker
           do
-            docker build -t terferre/${project}:testing-${app} ${app}
+            docker build -t ljferrero/${project}:testing-${app} ${app}
           done
         #install kubernetes en ubunto
         sudo apt-get update -y
@@ -182,11 +182,6 @@ jobs:
         while true
           do 
             sleep 10
-            #kubectl describe deploy/redis
-            #kubectl describe rs 
-            #kubectl describe po
-            #kubectl logs deploy/redis
-            #sleep 100
             kubectl logs deploy/${app} 2>& 1 | grep "${pattern}" && break 
           done
         app=rng
@@ -194,7 +189,7 @@ jobs:
         while true
           do 
             sleep 10
-            kubectl logs deploy/${app} 2>& 1 | grep "${pattern}" && break 
+            kubectl logs ds/${app} 2>& 1 | grep "${pattern}" && break
           done
         app=webui
         pattern='WEBUI running on port'
@@ -209,6 +204,4 @@ jobs:
           do 
             sleep 10
             kubectl logs deploy/${app} 2>& 1 | grep "${pattern}" && break 
-          done            
-            
-            
+          done
