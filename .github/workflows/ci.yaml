@@ -125,7 +125,7 @@ jobs:
         #creo imagen image
         for app in hasher rng webui worker
           do
-            docker build -t terferre/${project}:testing-${app} ${app}
+            docker build -t ljferrero/${project}:testing-${app} ${app}
           done
         #install kubernetes en ubunto
         sudo apt-get update -y
