@@ -1,72 +1,70 @@
-#se le pone el daemonset (configuracion de un demonio solamente una vez por mq virtual a diferencia con el Deployment que puede terner muchas replicas)
+#se le pone el daemonset (configuracion de un demonio solamente una vez por mq virtual a diferencia con el Deployment que puede terner muchas replicas repartidos por la mqv)
 apiVersion: apps/v1
 kind: DaemonSet
-metadata:
+metadata: 
   name: rng
 spec:
-  selector:
+  selector: 
     matchLabels:
       app: rng
-  template:
-    metadata:
-      labels:
-        app: rng
-    spec:
-      containers:
+  template: 
+    metadata: 
+      labels: 
+        app: rng        
+    spec: 
+      containers: 
         -
           image: ljferrero/dockercoins:latest-rng
           imagePullPolicy: Always
           name: rng
-          ports:
+          ports: 
             -
               containerPort: 8080
               protocol: TCP
----              
+---
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: 
   name: hasher
 spec:
-  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: hasher
-  template:
-    metadata:
-      labels:
-        app: hasher
-    spec:
-      containers:
+  template: 
+    metadata: 
+      labels: 
+        app: hasher        
+    spec: 
+      containers: 
         -
           image: ljferrero/dockercoins:latest-hasher
-          name: hasher
           imagePullPolicy: Always
-          ports:
+          name: hasher
+          ports: 
             -
               containerPort: 8080
               protocol: TCP
----              
+---
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: 
   name: redis
 spec:
-  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: redis
-  template:
-    metadata:
-      labels:
-        app: redis
-    spec:
-      containers:
+  template: 
+    metadata: 
+      labels: 
+        app: redis        
+    spec: 
+      containers: 
         -
           image: redis
           name: redis
-          ports:
+          ports: 
             -
               containerPort: 6379
               protocol: TCP
@@ -81,52 +79,50 @@ spec:
 ---
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: 
   name: webui
 spec:
-  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: webui
-  template:
-    metadata:
-      labels:
-        app: webui
-    spec:
-      containers:
+  template: 
+    metadata: 
+      labels: 
+        app: webui        
+    spec: 
+      containers: 
         -
-          image: ljferrero/dockercoins:latest-webui
+          image: terferre/dockercoins:latest-webui
           imagePullPolicy: Always
           name: webui
-          ports:
+          ports: 
             -
               containerPort: 8080
               protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: 
   name: worker
 spec:
-  #100 replicas como mucho por mq, aqui 300 en le cluster ya q tenemos 3 workers
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: worker
-  template:
-    metadata:
-      labels:
-        app: worker
-    spec:
-      containers:
+  template: 
+    metadata: 
+      labels: 
+        app: worker        
+    spec: 
+      containers: 
         -
-          image: ljferrero/dockercoins:latest-worker
+          image: terferre/dockercoins:latest-worker
           imagePullPolicy: Always
           name: worker
 ---
 apiVersion: v1
-kind: Services
+kind: Service
 metadata:
   name: hasher
 spec:
@@ -138,7 +134,7 @@ spec:
     app: hasher
 ---
 apiVersion: v1
-kind: Services
+kind: Service
 metadata:
   name: redis
 spec:
@@ -150,7 +146,7 @@ spec:
     app: redis
 ---
 apiVersion: v1
-kind: Services
+kind: Service
 metadata:
   name: rng
 spec:
@@ -162,7 +158,7 @@ spec:
     app: rng
 ---
 apiVersion: v1
-kind: Services
+kind: Service
 metadata:
   name: webui
 spec:
@@ -172,5 +168,4 @@ spec:
       targetPort: 8080
   selector:
     app: webui
-    
-  
+---
