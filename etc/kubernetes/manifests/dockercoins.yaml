@@ -16,6 +16,7 @@ spec:
         -
           image: ljferrero/dockercoins:latest-rng
           imagePullPolicy: Always
+          name: rng
           ports:
             -
               containerPort: 8080
@@ -39,6 +40,7 @@ spec:
       containers:
         -
           image: ljferrero/dockercoins:latest-hasher
+          name: hasher
           imagePullPolicy: Always
           ports:
             -
@@ -64,6 +66,7 @@ spec:
         -
           image: redis
           imagePullPolicy: Always
+          name: redis
           ports:
             -
               containerPort: 6379
@@ -96,6 +99,7 @@ spec:
         -
           image: ljferrero/dockercoins:latest-webui
           imagePullPolicy: Always
+          name: webui
           ports:
             -
               containerPort: 8080
@@ -120,6 +124,7 @@ spec:
         -
           image: ljferrero/dockercoins:latest-worker
           imagePullPolicy: Always
+          name: worker
 ---
 apiVersion: v1
 kind: Services
