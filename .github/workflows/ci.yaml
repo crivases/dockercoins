@@ -197,6 +197,11 @@ jobs:
         while true
           do 
             sleep 10
+            kubectl describe deploy
+            kubectl describe rs
+            kubectl describe po
+            kubectl get deploy | grep "${app}.*\([0-9]\)/\1" && break
+            sleep 100
             kubectl logs deploy/${app} 2>& 1 | grep "${pattern}" && break 
           done
         app=worker
