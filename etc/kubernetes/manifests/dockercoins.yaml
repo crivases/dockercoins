@@ -93,7 +93,7 @@ spec:
     spec: 
       containers: 
         -
-          image: terferre/dockercoins:latest-webui
+          image: ljferrero/dockercoins:latest-webui
           imagePullPolicy: Always
           name: webui
           ports: 
@@ -117,7 +117,7 @@ spec:
     spec: 
       containers: 
         -
-          image: terferre/dockercoins:latest-worker
+          image: ljferrero/dockercoins:latest-worker
           imagePullPolicy: Always
           name: worker
 ---
