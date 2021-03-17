@@ -15,7 +15,7 @@ jobs:
         set -x
         for app in hasher rng webui worker
           do \
-            docker build -t ljferrero/dockercoins:testing-${app} ${app}
+            docker build -t crivases/dockercoins:testing-${app} ${app}
           done
         #creamos redes p cada uno
         for app in hasher redis rng webui worker
@@ -27,7 +27,7 @@ jobs:
         # 
         for app in hasher rng webui worker 
           do \
-            docker run -d --name ${app} --network ${app} ljferrero/dockercoins:testing-${app}
+            docker run -d --name ${app} --network ${app} crivases/dockercoins:testing-${app}
           done
         #conectar los contenedores a las redes
         for app in webui worker
@@ -75,7 +75,7 @@ jobs:
         #creo imagen image
         for app in hasher rng webui worker
           do \
-            docker build -t ljferrero/dockercoins:testing-${app} ${app}
+            docker build -t crivases/dockercoins:testing-${app} ${app}
           done
         docker swarm init
         project=dockercoins
@@ -126,7 +126,7 @@ jobs:
         #creo imagen image
         for app in hasher rng webui worker
           do
-            docker build -t ljferrero/${project}:testing-${app} ${app}
+            docker build -t crivases/${project}:testing-${app} ${app}
           done
         #install kubernetes en ubunto
         sudo apt-get update -y
