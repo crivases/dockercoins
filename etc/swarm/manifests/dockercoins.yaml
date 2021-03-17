@@ -101,7 +101,7 @@ services:
       start_period: 30s
       test: wget -q --spider localhost:8080
       timeout: 1s
-    image: ljferrero/dockercoins:latest-rng
+    image: crivases/dockercoins:latest-rng
     networks:
       #la q hemos declarado en networks
       - rng
@@ -132,7 +132,7 @@ services:
       #podemos comprobarlo con docker run --rm XXX which curl y asi sabemos si lo tiene
       test: curl -f localhost:8080
       timeout: 1s
-    image: ljferrero/dockercoins:latest-webui
+    image: crivases/dockercoins:latest-webui
     networks:
       # se conecta con redes, por lo que lo especificamos (dos tarjetas de red) (podria usar se un proxy en DMZ)
       - redis
@@ -162,7 +162,7 @@ services:
       start_period: 30s
       test: netstat -nt | grep ESTABLISHED | grep -q 6379
       timeout: 1s
-    image: ljferrero/dockercoins:latest-worker
+    image: crivases/dockercoins:latest-worker
     networks:
       # listar las que necesita
       - hasher
