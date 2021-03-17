@@ -14,7 +14,7 @@ spec:
     spec: 
       containers: 
         -
-          image: ljferrero/dockercoins:latest-rng
+          image: crivases/dockercoins:latest-rng
           imagePullPolicy: Always
           name: rng
           ports: 
@@ -38,7 +38,7 @@ spec:
     spec: 
       containers: 
         -
-          image: ljferrero/dockercoins:latest-hasher
+          image: crivases/dockercoins:latest-hasher
           imagePullPolicy: Always
           name: hasher
           ports: 
@@ -93,7 +93,7 @@ spec:
     spec: 
       containers: 
         -
-          image: ljferrero/dockercoins:latest-webui
+          image: crivases/dockercoins:latest-webui
           imagePullPolicy: Always
           name: webui
           ports: 
@@ -117,7 +117,7 @@ spec:
     spec: 
       containers: 
         -
-          image: ljferrero/dockercoins:latest-worker
+          image: crivases/dockercoins:latest-worker
           imagePullPolicy: Always
           name: worker
 ---
