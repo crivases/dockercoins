@@ -38,8 +38,8 @@ services:
       test: wget -q --spider localhost:8080
       timeout: 1s
     # para diferentes microservicios  
-    image: ljferrero/dockercoins:latest-hasher
-    #1 proyecto x Ms -> image: ljferrero/dockercoins-haser:latest
+    image: crivases/dockercoins:latest-hasher
+    #1 proyecto x Ms -> image: crivases/dockercoins-haser:latest
     networks:
       #la q hemos declarado en networks
       - hasher
